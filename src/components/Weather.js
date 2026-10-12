@@ -2,13 +2,8 @@ import { useState } from 'react';
 import axios from 'axios';
 import './Weather.css';
 
-
-const apiKey = import.meta.env.VITE_WEATHER_API_KEY;
-
-// add this line
-if (!apiKey) {
-  return <h1>API Key missing. Add VITE_WEATHER_API_KEY in Vercel.</h1>
-}
+// Read the key once, outside the component.
+const API_KEY = process.env.REACT_APP_WEATHER_API_KEY;
 
 function Weather() {
   const [city, setCity] = useState('');
@@ -28,7 +23,7 @@ function Weather() {
 
     if (!API_KEY) {
       setError(
-        'Missing API key. Add REACT_APP_WEATHER_API_KEY to your .env file and restart the app.'
+        'Missing API key. Add REACT_APP_WEATHER_API_KEY to your .env file (or to Vercel) and restart or redeploy.'
       );
       return;
     }
@@ -37,7 +32,6 @@ function Weather() {
     setError('');
 
     try {
-      // User input is placed into the URL dynamically with a template literal.
       const url = `https://api.openweathermap.org/data/2.5/weather?q=${encodeURIComponent(
         query
       )}&units=metric&appid=${API_KEY}`;
