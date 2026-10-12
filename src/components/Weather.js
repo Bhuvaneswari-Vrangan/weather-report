@@ -2,7 +2,13 @@ import { useState } from 'react';
 import axios from 'axios';
 import './Weather.css';
 
-const API_KEY = process.env.REACT_APP_WEATHER_API_KEY;
+
+const apiKey = import.meta.env.VITE_WEATHER_API_KEY;
+
+// add this line
+if (!apiKey) {
+  return <h1>API Key missing. Add VITE_WEATHER_API_KEY in Vercel.</h1>
+}
 
 function Weather() {
   const [city, setCity] = useState('');
